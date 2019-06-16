@@ -9,7 +9,7 @@ public class TowerBehavior : MonoBehaviour
     public enum Tower_ty { None, Arch, Stone, Ice, Magic }
     private float timer;
     //区域属性
-    private bool is_selected = true;
+    private bool is_selected = false;
     private bool is_built = false;
 
     //塔属性
@@ -42,6 +42,10 @@ public class TowerBehavior : MonoBehaviour
         atk_time = Mathf.Infinity;
         
     }
+    private void OnMouseUp()
+    {
+        is_selected = !is_selected;
+    }
 
     void Update()
     {
@@ -50,25 +54,21 @@ public class TowerBehavior : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
             {
-                ty = Tower_ty.Arch;
                 Set_Tower(Tower_ty.Arch);
                 Debug.Log("Set to Arch Tower.");
             }
             if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
             {
-                ty = Tower_ty.Stone;
                 Set_Tower(Tower_ty.Stone);
                 Debug.Log("Set to Stone Tower.");
             }
             if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
             {
-                ty = Tower_ty.Ice;
                 Set_Tower(Tower_ty.Ice);
                 Debug.Log("Set to Ice Tower.");
             }
             if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
             {
-                ty = Tower_ty.Magic;
                 Set_Tower(Tower_ty.Magic);
                 Debug.Log("Set to Magic Tower.");
             }
@@ -89,7 +89,7 @@ public class TowerBehavior : MonoBehaviour
         {
             float dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(enemy.transform.position.x, enemy.transform.position.y));
             //条件：在攻击范围内，有攻击力，敌人没死，攻击CD好了
-            if (dist < 100 && attack != 0 && enemy.hp > 0 && timer >= atk_time)
+            if (dist < atk_range && attack != 0 && enemy.hp > 0 && timer >= atk_time)
             {
                 enemy.beAttacked(attack);
                 timer = 0;
@@ -103,6 +103,7 @@ public class TowerBehavior : MonoBehaviour
         switch(ty)
         {
             case Tower_ty.None:
+                ty = Tower_ty.None;
                 attack = 0;
                 atk_time = Mathf.Infinity;
                 atk_range = 5;
@@ -113,6 +114,7 @@ public class TowerBehavior : MonoBehaviour
                 is_built = false;
                 break;
             case Tower_ty.Arch:
+                ty = Tower_ty.Arch;
                 go_arch.SetActive(true);
                 attack = 10;
                 atk_time = 0.5f;
@@ -120,6 +122,7 @@ public class TowerBehavior : MonoBehaviour
                 is_built = true;
                 break;
             case Tower_ty.Stone:
+                ty = Tower_ty.Stone;
                 go_stone.SetActive(true);
                 attack = 20;
                 atk_time = 1f;
@@ -127,6 +130,7 @@ public class TowerBehavior : MonoBehaviour
                 is_built = true;
                 break;
             case Tower_ty.Ice:
+                ty = Tower_ty.Ice;
                 go_ice.SetActive(true);
                 attack = 5;
                 atk_time = 1f;
@@ -134,6 +138,7 @@ public class TowerBehavior : MonoBehaviour
                 is_built = true;
                 break;
             case Tower_ty.Magic:
+                ty = Tower_ty.Magic;
                 go_magic.SetActive(true);
                 attack = 30;
                 atk_time = 0.4f;
@@ -141,5 +146,6 @@ public class TowerBehavior : MonoBehaviour
                 is_built = true;
                 break;
         }
+        is_selected = false;
     }
 }
