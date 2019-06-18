@@ -9,5 +9,13 @@ public class LevelChoose : MonoBehaviour
     {
         SceneManager.LoadScene("Demo");
     }
+    public GameObject
+        Menu,
+        LevelSelecter;
 
+    public void Return()
+    {
+        LevelSelecter.SetActive(false);
+        Menu.SetActive(true);
+    }
 }
