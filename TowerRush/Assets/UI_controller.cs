@@ -37,4 +37,8 @@ public class UI_controller : MonoBehaviour
     {
         SceneManager.LoadScene("mainMenu");
     }
+    public void restart()
+    {
+        SceneManager.LoadScene("Demo");
+    }
 }

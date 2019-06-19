@@ -9,7 +9,7 @@ public class TowerBehavior : MonoBehaviour
     public enum Tower_ty { None, Arch, Stone, Ice, Magic }
     private float timer;
     //区域属性
-    private bool is_selected = false;
+    public bool is_selected = false;
     private bool is_built = false;
 
     //塔属性
