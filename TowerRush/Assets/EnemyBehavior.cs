@@ -11,7 +11,7 @@ public class EnemyBehavior : MonoBehaviour
 
     private int route_count;
     private List<Vector3> route;
-    private float move_speed = 0.0003f;
+    private float move_speed;
 
     public GameObject hp_bar;
     public Transform hp_bar_tran;
@@ -40,6 +40,7 @@ public class EnemyBehavior : MonoBehaviour
         is_dead = false;
         def = 0.5f;
         hp = 500;
+        move_speed = 0.5f;
 
         hp_bar_tran = hp_bar.GetComponent<Transform>();
         transform = gameObject.GetComponent<Transform>();
@@ -55,13 +56,13 @@ public class EnemyBehavior : MonoBehaviour
         if(is_slowed)
         {
             slow_timer += Time.deltaTime;
-            move_speed = 0.0001f;
+            move_speed = 0.2f;
         }
         else
         {
-            move_speed = 0.0003f;
+            move_speed = 0.5f;
         }
-        if(slow_timer >= 0.5f)
+        if(slow_timer >= 0.3f)
         {
             is_slowed = false;
         }
@@ -76,22 +77,22 @@ public class EnemyBehavior : MonoBehaviour
         //匀速移动
         if (!is_dead && route_count < route.Count - 1)
         {
-            transform.position += (route[route_count + 1] - route[route_count]).normalized * move_speed / Time.deltaTime;
-            Debug.Log("move");
+            transform.position += (route[route_count + 1] - route[route_count]).normalized * move_speed * Time.deltaTime;
             if (Vector3.Distance(transform.position, route[route_count + 1]) < 0.02f)
                 route_count++;
         }
     }
 
     //被攻击接口
-    public void beAttacked(int atk)
+    public void BeAttacked(int atk)
     {
         hp -= atk;
         Debug.Log("Enemy be attacked " + atk + "hp, now " + hp +"hp.");
     }
 
-    public void beSlowed()
+    public void BeSlowed()
     {
+        Debug.Log("slow.");
         is_slowed = true;
         slow_timer = 0;
     }

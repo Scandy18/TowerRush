@@ -17,15 +17,15 @@ public class TowerBuild : MonoBehaviour
     }
     public void tower_2()
     {
-        towerBuild(TowerBehavior.Tower_ty.Arch);
+        towerBuild(TowerBehavior.Tower_ty.Stone);
     }
     public void tower_3()
     {
-        towerBuild(TowerBehavior.Tower_ty.Arch);
+        towerBuild(TowerBehavior.Tower_ty.Ice);
     }
     public void tower_4()
     {
-        towerBuild(TowerBehavior.Tower_ty.Arch);
+        towerBuild(TowerBehavior.Tower_ty.Magic);
     }
     public void cancel()
     {

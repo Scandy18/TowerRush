@@ -63,39 +63,38 @@ public class TowerBehavior : MonoBehaviour
         #endregion
 
         //选中未建造区域可以建造塔
-        if (is_selected && !is_built)
-        {
-            if(Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
-            {
-                Set_Tower(Tower_ty.Arch);
-                Debug.Log("Set to Arch Tower.");
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
-            {
-                Set_Tower(Tower_ty.Stone);
-                Debug.Log("Set to Stone Tower.");
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
-            {
-                Set_Tower(Tower_ty.Ice);
-                Debug.Log("Set to Ice Tower.");
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
-            {
-                Set_Tower(Tower_ty.Magic);
-                Debug.Log("Set to Magic Tower.");
-            }
-        }
-        //选中已建造区域可以摧毁塔
-        if(is_selected && is_built)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Keypad0))
-            {
-                ty = Tower_ty.None;
-                Set_Tower(Tower_ty.None);
-                Debug.Log("Destroy the Tower.");
-            }
-        }
+        //if (is_selected && !is_built)
+        //{
+        //    if(Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+        //    {
+        //        Set_Tower(Tower_ty.Arch);
+        //        Debug.Log("Set to Arch Tower.");
+        //    }
+        //    if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+        //    {
+        //        Set_Tower(Tower_ty.Stone);
+        //        Debug.Log("Set to Stone Tower.");
+        //    }
+        //    if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+        //    {
+        //        Set_Tower(Tower_ty.Ice);
+        //        Debug.Log("Set to Ice Tower.");
+        //    }
+        //    if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
+        //    {
+        //        Set_Tower(Tower_ty.Magic);
+        //        Debug.Log("Set to Magic Tower.");
+        //    }
+        //}
+        ////选中已建造区域可以摧毁塔
+        //if(is_selected && is_built)
+        //{
+        //    if (Input.GetKeyDown(KeyCode.Alpha0) || Input.GetKeyDown(KeyCode.Keypad0))
+        //    {
+        //        Set_Tower(Tower_ty.None);
+        //        Debug.Log("Destroy the Tower.");
+        //    }
+        //}
 
         #region 攻击逻辑
         
@@ -118,9 +117,12 @@ public class TowerBehavior : MonoBehaviour
             if (nearestEnemy.hp > 0 && timer >= atk_time)
             {
                 if(ty == Tower_ty.Magic) //魔法塔无视防御
-                    nearestEnemy.beAttacked(attack);
+                    nearestEnemy.BeAttacked(attack);
                 else
-                    nearestEnemy.beAttacked((int)(attack * (1 - nearestEnemy.def)));
+                    nearestEnemy.BeAttacked((int)(attack * (1 - nearestEnemy.def)));
+
+                if (ty == Tower_ty.Ice) //冰塔减速
+                    nearestEnemy.BeSlowed();
 
                 timer = 0; // 攻击CD重新计时
             }
@@ -129,9 +131,9 @@ public class TowerBehavior : MonoBehaviour
     }
 
 
-    public void Set_Tower(Tower_ty ty)
+    public void Set_Tower(Tower_ty tempty)
     {
-        switch(ty)
+        switch(tempty)
         {
             case Tower_ty.None:
                 ty = Tower_ty.None;
@@ -149,7 +151,7 @@ public class TowerBehavior : MonoBehaviour
                 go_arch.SetActive(true);
                 attack = 10;
                 atk_time = 0.5f;
-                atk_range = 5;
+                atk_range = 3;
                 is_built = true;
                 break;
             case Tower_ty.Stone:
@@ -157,7 +159,7 @@ public class TowerBehavior : MonoBehaviour
                 go_stone.SetActive(true);
                 attack = 20;
                 atk_time = 1f;
-                atk_range = 5;
+                atk_range = 1.5f;
                 is_built = true;
                 break;
             case Tower_ty.Ice:
@@ -165,15 +167,15 @@ public class TowerBehavior : MonoBehaviour
                 go_ice.SetActive(true);
                 attack = 5;
                 atk_time = 1f;
-                atk_range = 5;
+                atk_range = 2;
                 is_built = true;
                 break;
             case Tower_ty.Magic:
                 ty = Tower_ty.Magic;
                 go_magic.SetActive(true);
-                attack = 30;
+                attack = 5;
                 atk_time = 0.4f;
-                atk_range = 5;
+                atk_range = 3;
                 is_built = true;
                 break;
         }
