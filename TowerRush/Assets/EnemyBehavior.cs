@@ -11,10 +11,16 @@ public class EnemyBehavior : MonoBehaviour
 
     private int route_count;
     private List<Vector3> route;
-    private float move_speed = 0.0005f;
+    private float move_speed = 0.0003f;
 
+    public GameObject hp_bar;
+    public Transform hp_bar_tran;
     public bool is_dead;
+    public float def;
     public int hp;
+    //用于减速
+    private float slow_timer = 0;
+    private bool is_slowed = false;
 
     void Start()
     {
@@ -23,11 +29,19 @@ public class EnemyBehavior : MonoBehaviour
         route = new List<Vector3>();
         route.Add(new Vector3(-3, 0.5f, 2));
         route.Add(new Vector3(-3, 0.5f, 1));
-        route.Add(new Vector3(-1, 0.5f, 2));
+        route.Add(new Vector3(-1, 0.5f, 1));
+        route.Add(new Vector3(-1, 0.5f, 0));
+        route.Add(new Vector3(2, 0.5f, 0));
+        route.Add(new Vector3(2, 0.5f, -2));
+        route.Add(new Vector3(1, 0.5f, -2));
+        route.Add(new Vector3(1, 0.5f, -3));
+        route.Add(new Vector3(-3, 0.5f, -3));
 
         is_dead = false;
+        def = 0.5f;
         hp = 500;
 
+        hp_bar_tran = hp_bar.GetComponent<Transform>();
         transform = gameObject.GetComponent<Transform>();
         transform.position = route[0];
     }
@@ -35,6 +49,22 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //血条
+        hp_bar_tran.localScale = new Vector3(0.15f, 0.7f * hp / 500, 0.15f);
+        //减速
+        if(is_slowed)
+        {
+            slow_timer += Time.deltaTime;
+            move_speed = 0.0001f;
+        }
+        else
+        {
+            move_speed = 0.0003f;
+        }
+        if(slow_timer >= 0.5f)
+        {
+            is_slowed = false;
+        }
         //计时器
         Timer += Time.deltaTime;
         //死亡判断
@@ -59,4 +89,11 @@ public class EnemyBehavior : MonoBehaviour
         hp -= atk;
         Debug.Log("Enemy be attacked " + atk + "hp, now " + hp +"hp.");
     }
+
+    public void beSlowed()
+    {
+        is_slowed = true;
+        slow_timer = 0;
+    }
+    
 }

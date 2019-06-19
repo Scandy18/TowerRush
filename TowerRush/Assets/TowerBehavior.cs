@@ -55,8 +55,15 @@ public class TowerBehavior : MonoBehaviour
 
     void Update()
     {
+        #region 选中
+        if (is_selected)
+            meshRenderer.enabled = true;
+        else
+            meshRenderer.enabled = false;
+        #endregion
+
         //选中未建造区域可以建造塔
-        if(is_selected && !is_built)
+        if (is_selected && !is_built)
         {
             if(Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
             {
@@ -89,21 +96,38 @@ public class TowerBehavior : MonoBehaviour
                 Debug.Log("Destroy the Tower.");
             }
         }
-        //攻击逻辑
+
+        #region 攻击逻辑
+        
         timer += Time.deltaTime;
+        float nearestDist = Mathf.Infinity;
+        EnemyBehavior nearestEnemy = null;
         foreach (var enemy in Enemies)
         {
             float dist = Vector2.Distance(new Vector2(transform.position.x, transform.position.y), new Vector2(enemy.transform.position.x, enemy.transform.position.y));
-            //条件：在攻击范围内，有攻击力，敌人没死，攻击CD好了
-            if (dist < atk_range && attack != 0 && enemy.hp > 0 && timer >= atk_time)
+            //在攻击范围内，计算最近的敌人
+            if (dist < atk_range && dist < nearestDist)
             {
-                enemy.beAttacked(attack);
-                timer = 0;
+                nearestDist = dist;
+                nearestEnemy = enemy;
             }
         }
+        if(nearestEnemy)
+        {
+            //敌人没死，攻击CD好了
+            if (nearestEnemy.hp > 0 && timer >= atk_time)
+            {
+                if(ty == Tower_ty.Magic) //魔法塔无视防御
+                    nearestEnemy.beAttacked(attack);
+                else
+                    nearestEnemy.beAttacked((int)(attack * (1 - nearestEnemy.def)));
 
+                timer = 0; // 攻击CD重新计时
+            }
+        }
+        #endregion
     }
-    
+
 
     public void Set_Tower(Tower_ty ty)
     {
