@@ -29,8 +29,14 @@ public class TowerBehavior : MonoBehaviour
     //敌人列表
     public List<EnemyBehavior> Enemies;
 
+    //渲染器
+    private MeshRenderer meshRenderer;
+
     void Start()
     {
+        meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        meshRenderer.enabled = false; //隐形
+
         transform = gameObject.GetComponent<Transform>();
         timer = 0;
 
@@ -95,6 +101,7 @@ public class TowerBehavior : MonoBehaviour
                 timer = 0;
             }
         }
+
     }
     
 

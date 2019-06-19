@@ -21,9 +21,9 @@ public class EnemyBehavior : MonoBehaviour
         route_count = 0;
         //设定路线
         route = new List<Vector3>();
-        route.Add(new Vector3(-1, 0.5f, 4));
-        route.Add(new Vector3(-1, 0.5f, 1));
-        route.Add(new Vector3(9, 0.5f, 1));
+        route.Add(new Vector3(-3, 0.5f, 2));
+        route.Add(new Vector3(-3, 0.5f, 1));
+        route.Add(new Vector3(-1, 0.5f, 2));
 
         is_dead = false;
         hp = 500;
