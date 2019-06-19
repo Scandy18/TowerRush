@@ -66,6 +66,7 @@
     <Compile Include="Assets\TowerBehavior.cs" />
     <Compile Include="Assets\TowerBuild.cs" />
     <Compile Include="Assets\UI_controller.cs" />
+    <None Include="Assets\3D Tower Defense Starter Kit\Textures\GUI\Atlases\typographer_rotunda.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/GitHub/TowerRush/TowerRush/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
