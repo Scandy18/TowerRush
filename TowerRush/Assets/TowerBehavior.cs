@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
+using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TowerBehavior : MonoBehaviour
 {
@@ -50,7 +52,16 @@ public class TowerBehavior : MonoBehaviour
     }
     private void OnMouseUp()
     {
-        is_selected = !is_selected;
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            Debug.Log("touch area is UI");
+        }
+        else
+        {
+            is_selected = !is_selected;
+        }
+        
     }
 
     void Update()
