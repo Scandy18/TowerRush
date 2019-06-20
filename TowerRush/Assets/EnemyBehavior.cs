@@ -73,6 +73,7 @@ public class EnemyBehavior : MonoBehaviour
         {
             Debug.Log("Enemy dies.");
             is_dead = true;
+            gameObject.SetActive(false);
         }
         //匀速移动
         if (!is_dead && route_count < route.Count - 1)
