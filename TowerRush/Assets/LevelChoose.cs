@@ -15,6 +15,7 @@ public class LevelChoose : MonoBehaviour
 
     public void Return()
     {
+        MenuUI.Status = 0;
         LevelSelecter.SetActive(false);
         Menu.SetActive(true);
     }

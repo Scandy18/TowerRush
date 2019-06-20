@@ -9,10 +9,12 @@ public class TowerBehavior : MonoBehaviour
 {
 
     public enum Tower_ty { None, Arch, Stone, Ice, Magic }
+    public static int[] costs= {0,60,80,100,120};
+    public static int[] destroy_return = { 0, 30, 40, 50, 60 };
     private float timer;
     //区域属性
     public bool is_selected = false;
-    private bool is_built = false;
+    public bool is_built = false;
 
     //塔属性
     private Transform transform;
@@ -27,6 +29,9 @@ public class TowerBehavior : MonoBehaviour
     public GameObject go_stone;
     public GameObject go_ice;
     public GameObject go_magic;
+
+    //UI
+    GameObject UI;
 
     //敌人列表
     public List<EnemyBehavior> Enemies;
@@ -144,9 +149,11 @@ public class TowerBehavior : MonoBehaviour
 
     public void Set_Tower(Tower_ty tempty)
     {
+        int return_cost=0;//拆毁时记录返回钱数量
         switch(tempty)
         {
             case Tower_ty.None:
+                return_cost = destroy_return[(int)ty];
                 ty = Tower_ty.None;
                 attack = 0;
                 atk_time = Mathf.Infinity;
@@ -191,5 +198,16 @@ public class TowerBehavior : MonoBehaviour
                 break;
         }
         is_selected = false;
+        if(return_cost==0)
+        {
+            UI = GameObject.Find("BasicAttribute");
+            UI.GetComponent<Attribute_UI_controller>().change_money(-costs[(int)tempty]);
+        }
+        else
+        {
+            UI = GameObject.Find("BasicAttribute");
+            UI.GetComponent<Attribute_UI_controller>().change_money(return_cost);
+        }
+        
     }
 }

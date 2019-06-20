@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MenuUI : MonoBehaviour
 {
+    public static int Status;
 
     public GameObject
         Menu,
@@ -12,13 +13,22 @@ public class MenuUI : MonoBehaviour
 
     public void SelectLevel()
     {
+        Status = 1;
         LevelSelecter.SetActive(true);
         Menu.SetActive(false);
     }
 
     void Start()
     {
-        LevelSelecter.SetActive(false);
+        if(Status==1)
+        {
+            SelectLevel();
+        }
+        else
+        {
+            LevelSelecter.SetActive(false);
+            Menu.SetActive(true);
+        }
     }
 
 }

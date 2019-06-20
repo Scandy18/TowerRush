@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
+    //UI
+    GameObject UI;
 
     public Transform transform;
     public float SpawnTime;
@@ -18,9 +20,13 @@ public class EnemyBehavior : MonoBehaviour
     public bool is_dead;
     public float def;
     public int hp;
+    public int reward = 10;//奖励money
+    public int damage = 10;//对博士的伤害
     //用于减速
     private float slow_timer = 0;
     private bool is_slowed = false;
+
+    
 
     void Start()
     {
@@ -74,6 +80,8 @@ public class EnemyBehavior : MonoBehaviour
             Debug.Log("Enemy dies.");
             is_dead = true;
             gameObject.SetActive(false);
+            UI = GameObject.Find("BasicAttribute");
+            UI.GetComponent<Attribute_UI_controller>().enemy_death(reward);
         }
         //匀速移动
         if (!is_dead && route_count < route.Count - 1)
@@ -98,4 +106,10 @@ public class EnemyBehavior : MonoBehaviour
         slow_timer = 0;
     }
     
+    //怪物到达终点
+    public void cross()
+    {
+        UI = GameObject.Find("BasicAttribute");
+        UI.GetComponent<Attribute_UI_controller>().enemy_cross(damage);
+    }
 }

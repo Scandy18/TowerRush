@@ -17,7 +17,7 @@ public class UI_controller : MonoBehaviour
     }
     public void button_accelerate()
     {
-        Time.timeScale = 0.5F;
+        Time.timeScale = 3;
     }
     public void button_settings()
     {
