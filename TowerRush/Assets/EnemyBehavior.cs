@@ -16,7 +16,7 @@ public class EnemyBehavior : MonoBehaviour
     //行进
     private int route_count;
     public List<Vector3> route;
-    private float move_speed;
+    public float move_speed;
     //属性
     public GameObject hp_bar;
     public Transform hp_bar_tran;
@@ -36,9 +36,9 @@ public class EnemyBehavior : MonoBehaviour
         route_count = 0;
         is_slowed = false;
         is_dead = false;
-        def = 0.5f;
-        hp = 500;
-        move_speed = 0.5f;
+        //def = 0.5f;
+        //hp = 500;
+        //move_speed = 0.5f;
         hp_bar_tran = hp_bar.GetComponent<Transform>();
         transform = gameObject.GetComponent<Transform>();
         meshRenderer = gameObject.GetComponent<MeshRenderer>();
