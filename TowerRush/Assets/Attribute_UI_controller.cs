@@ -22,7 +22,7 @@ public class Attribute_UI_controller : MonoBehaviour
 
     void Start()
     {
-        init_attributes(300, 1, 5, 10, 10);
+        init_attributes(200, 1, 5, 10, 10);
     }
 
     public void init_attributes(  int money = 0,int curWave = 0,int maxWave = 0,int hp = 0,int leftEnemy = 0)
