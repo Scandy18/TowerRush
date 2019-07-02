@@ -20,6 +20,8 @@ public class Attribute_UI_controller : MonoBehaviour
     public int Hp { get => hp; set => hp = value; }
     public int LeftEnemy { get => leftEnemy; set => leftEnemy = value; }
 
+    public GameObject win,UI;
+
     void Start()
     {
         init_attributes(200, 1, 5, 10, 10);
@@ -84,6 +86,8 @@ public class Attribute_UI_controller : MonoBehaviour
         leftEnemy-=1;
         if (leftEnemy == 0 && CurWave < MaxWave)
             CurWave++;
+        else
+            levelwin();
         enemy_changed();
         wave_changed();
     }
@@ -99,5 +103,10 @@ public class Attribute_UI_controller : MonoBehaviour
     void GameOver()
     {
         SceneManager.LoadScene("GameOver");
+    }
+    void levelwin()
+    {
+        win.SetActive(true);
+        UI.SetActive(false);
     }
 }
