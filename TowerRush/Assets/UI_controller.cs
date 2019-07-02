@@ -39,6 +39,6 @@ public class UI_controller : MonoBehaviour
     }
     public void restart()
     {
-        SceneManager.LoadScene("Demo");
+        SceneManager.LoadScene("Level1");
     }
 }

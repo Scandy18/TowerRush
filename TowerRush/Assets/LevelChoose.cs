@@ -7,7 +7,7 @@ public class LevelChoose : MonoBehaviour
 {
     public void LoadLevel()
     {
-        SceneManager.LoadScene("Demo");
+        SceneManager.LoadScene("Level1");
     }
     public GameObject
         Menu,
