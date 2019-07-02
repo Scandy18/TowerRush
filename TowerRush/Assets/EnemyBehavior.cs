@@ -23,7 +23,7 @@ public class EnemyBehavior : MonoBehaviour
     private bool is_dead;
     public float def;
     public int hp;
-    public int reward = 10;//奖励money
+    public int reward = 30;//奖励money
     public int damage = 10;//对博士的伤害
     //用于减速
     private float slow_timer = 0;
