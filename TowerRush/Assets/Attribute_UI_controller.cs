@@ -84,6 +84,8 @@ public class Attribute_UI_controller : MonoBehaviour
         leftEnemy-=1;
         if (leftEnemy == 0 && CurWave < MaxWave)
             CurWave++;
+        else
+            SceneManager.LoadScene("levelwin");
         enemy_changed();
         wave_changed();
     }
